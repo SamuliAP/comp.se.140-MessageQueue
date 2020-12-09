@@ -34,7 +34,7 @@ func main() {
 	onError(err, "Couldn't open data source")
 	go func() {
 		for d := range msgs {
-			var row = time.Now().Format(time.RFC3339)+" Topic "+d.RoutingKey+" "+fmt.Sprintf("%s \n", d.Body)
+			var row = time.Now().Format(time.RFC3339Nano) + " Topic " + d.RoutingKey + " " + fmt.Sprintf("%s \n", d.Body)
 			f.WriteString(row)
 			log.Printf("Wrote to file: %s", row)
 		}
@@ -86,8 +86,8 @@ func declareQueue(ch *amqp.Channel) amqp.Queue {
 
 func bindQueue(ch *amqp.Channel, q amqp.Queue, key string) {
 	err := ch.QueueBind(
-		q.Name,       // queue name
-		key,       // routing key
+		q.Name,     // queue name
+		key,        // routing key
 		"comps400", // exchange
 		false,
 		nil)
