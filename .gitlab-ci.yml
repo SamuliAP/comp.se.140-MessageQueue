@@ -1,13 +1,10 @@
-image: docker/compose:latest
-
-services:
-  - docker:dind
-
-before_script:
-  - docker version
-  - docker-compose version
-
 build:
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - docker-compose version
   stage: build
   script:
     - docker-compose down
