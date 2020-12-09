@@ -16,7 +16,3 @@ golang:
   stage: test
   script:
     - go test -v ./tests/...
-  artifacts:
-    when: always
-    reports:
-      junit: report.xml
