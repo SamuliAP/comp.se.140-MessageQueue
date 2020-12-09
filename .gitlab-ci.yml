@@ -15,7 +15,7 @@ golang:
   image: golang
   stage: test
   script:
-    - go test -v ./...
+    - go test -v ./tests/...
   artifacts:
     when: always
     reports:
