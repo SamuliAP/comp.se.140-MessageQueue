@@ -1,7 +1,10 @@
 version: '3.8'
 
 services:
+
   rabbitmq:
+    networks:
+      - devops
     image: rabbitmq:management-alpine
     container_name: rabbitmq
     expose:
@@ -11,18 +14,24 @@ services:
       - 15672:15672
 
   orig:
+    networks:
+      - devops
     build: ./orig
     container_name: orig
     depends_on:
       - rabbitmq
 
   imed:
+    networks:
+      - devops
     build: ./imed
     container_name: imed
     depends_on:
       - rabbitmq
 
   obse:
+    networks:
+      - devops
     build:
       context: ./
       dockerfile: ./obse/Dockerfile
@@ -33,11 +42,19 @@ services:
       - rabbitmq
 
   httpserv:
+    networks:
+      - devops
     build:
       context: ./
       dockerfile: ./httpserv/Dockerfile
     container_name: httpserv
     ports:
       - 8081:80
+    expose:
+      - 80
     volumes:
       - ./data:/app/data
+
+networks:
+  devops:
+    driver: bridge

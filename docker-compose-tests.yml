@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  tests:
+    networks:
+      - devops
+    build:
+      context: ./
+      dockerfile: ./tests/Dockerfile
+    container_name: tests
+
+networks:
+  devops:
+    driver: bridge
