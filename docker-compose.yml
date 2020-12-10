@@ -16,10 +16,13 @@ services:
   orig:
     networks:
       - devops
-    build: ./orig
+    build:
+      context: ./
+      dockerfile: orig/Dockerfile
     container_name: orig
     depends_on:
       - rabbitmq
+      - server
 
   imed:
     networks:
@@ -53,19 +56,21 @@ services:
     volumes:
       - ./data:/app/data
 
-  api:
+  server:
     networks:
       - devops
     build:
       context: ./
-      dockerfile: ./api/Dockerfile
-    container_name: api
+      dockerfile: server/Dockerfile
+    container_name: server
     ports:
       - 8081:80
     expose:
       - 80
     depends_on:
       - httpserv
+    volumes:
+      - ./data:/app/data
 
 
 networks:

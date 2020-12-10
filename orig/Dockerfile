@@ -1,10 +1,11 @@
 FROM golang
+FROM golang
 
 WORKDIR /app
 
 COPY . .
-
-RUN go mod init orig
+WORKDIR /app/orig
+RUN go get -d ./...
 RUN go build -o out .
 
-CMD ["/app/out"]
+CMD ["/app/orig/out"]

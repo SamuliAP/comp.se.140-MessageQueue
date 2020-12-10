@@ -8,22 +8,38 @@ import (
 )
 
 const (
-	INIT     string = "INIT"
-	PAUSED   string = "PAUSED"
-	RUNNING  string = "RUNNNING"
-	SHUTDOWN string = "SHUTDOWN"
+	CMD_INIT      string = "INIT"
+	CMD_SHUTDOWN  string = "SHUTDOWN"
+	STATE_PAUSED  string = "PAUSED"
+	STATE_RUNNING string = "RUNNING"
 )
+
+func ValidState(state string) bool {
+	switch state {
+	case STATE_PAUSED, STATE_RUNNING:
+		return true
+	default:
+		return false
+
+	}
+}
 
 func GetState() (string, error) {
 
-	return GetResponseBody(GetResponse, "http://api/state")
+	return GetResponseBody(GetResponse, "http://server/state")
+
+}
+
+func GetCMD() (string, error) {
+
+	return GetResponseBody(GetResponse, "http://server/cmd")
 
 }
 
 func PutState(state string) error {
 
 	client := http.Client{}
-	req, err := http.NewRequest(http.MethodPut, "http://api/state", bytes.NewBufferString(state))
+	req, err := http.NewRequest(http.MethodPut, "http://server/state", bytes.NewBufferString(state))
 	if err != nil {
 		return err
 	}

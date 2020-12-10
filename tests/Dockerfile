@@ -2,6 +2,7 @@ FROM golang
 
 WORKDIR /app
 
-COPY ./tests .
+COPY ./tests ./tests
+COPY ./api ./api
 
-CMD ["go", "test", "-v" ,"./"]
+CMD ["go", "test", "-v" ,"./tests"]

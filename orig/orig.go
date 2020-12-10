@@ -1,6 +1,7 @@
 package main
 
 import (
+	"../api"
 	"errors"
 	"github.com/streadway/amqp"
 	"log"
@@ -25,10 +26,40 @@ func main() {
 
 	log.Println("Sending messages")
 	for i := 1; true; i++ {
+
+		for InPausedState() {
+			log.Println("PAUSED")
+			time.Sleep(3 * time.Second)
+		}
+
+		if ShouldShutdown() {
+			log.Println("SHUT DOWN")
+			return
+		}
+
 		publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
 		log.Printf("Sent out: %d", i)
 		time.Sleep(3 * time.Second)
+
 	}
+}
+
+func ShouldShutdown() bool {
+	state, err := api.GetState()
+	if err != nil {
+		log.Println(err.Error())
+		return true
+	}
+	return state == api.CMD_SHUTDOWN
+}
+
+func InPausedState() bool {
+	state, err := api.GetState()
+	if err != nil {
+		log.Println(err.Error())
+		return true
+	}
+	return state == api.STATE_PAUSED
 }
 
 func publishMessage(ch *amqp.Channel, key string, message []byte) {

@@ -1,10 +1,12 @@
 package api
 
-import "testing"
+import (
+	"testing"
+)
 
 func GetMessagesBody() (string, error) {
 
-	return GetResponseBody(GetResponse, "http://api/messages")
+	return GetResponseBody(GetResponse, "http://server/messages")
 }
 
 func GetMessagesBodyHandleError(t *testing.T) string {
