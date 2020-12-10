@@ -24,6 +24,7 @@ func HandleMessages(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprint(w, "Couldn't read data source")
 		return
 	}
+	resp.Close = true
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)

@@ -17,6 +17,7 @@ func GetResponseBody(responseFunction func(string) (*http.Response, error), uri 
 		return "", errors.New("could not read response body")
 	}
 
+	resp.Close = true
 	defer resp.Body.Close()
 
 	return string(body), nil
