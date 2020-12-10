@@ -6,7 +6,7 @@ import (
 
 func TestHTTPConnection(t *testing.T) {
 
-	resp, err := GetMessage(t)
+	resp, err := GetMessages(t)
 	if err != nil {
 		t.Error(err.Error())
 	}

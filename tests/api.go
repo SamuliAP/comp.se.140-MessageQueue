@@ -2,12 +2,29 @@ package tests
 
 import (
 	"errors"
+	"io/ioutil"
 	"net/http"
 	"testing"
 	"time"
 )
 
-func GetMessage(t *testing.T) (*http.Response, error) {
+func GetMessagesBody(t *testing.T) string {
+	resp, err := GetMessages(t)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Error("could not read response body")
+	}
+
+	return string(body)
+}
+
+func GetMessages(t *testing.T) (*http.Response, error) {
 
 	t.Log(time.Now().Format(time.RFC3339Nano), " attempting to connect to API")
 	for i := 0; i < 30; i++ {
