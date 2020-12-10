@@ -31,7 +31,7 @@ func HandleRunlogNewStateCheck(t *testing.T, state string, contains []string) {
 		t.Error("Run log logged duplicate event", state)
 	}
 	for _, c := range contains {
-		if strings.Contains(newLog, c) {
+		if !strings.Contains(newLog, c) {
 			t.Error("Run log did not record state:", state)
 		}
 	}
