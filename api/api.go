@@ -26,6 +26,6 @@ func GetMessages(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	http.HandleFunc("/", GetMessages)
+	http.HandleFunc("/messages", GetMessages)
 	http.ListenAndServe(":80", nil)
 }

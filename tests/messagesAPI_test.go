@@ -1,11 +1,12 @@
 package tests
 
 import (
+	"./api"
 	"testing"
 )
 
 func TestInitialGetMessageBodyFormat(t *testing.T) {
 
-	body := GetMessagesBody(t)
+	body := api.GetMessagesBodyHandleError(t)
 	validateGetMessages(body, t)
 }

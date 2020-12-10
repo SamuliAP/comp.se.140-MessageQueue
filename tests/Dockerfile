@@ -4,4 +4,4 @@ WORKDIR /app
 
 COPY ./tests .
 
-CMD ["go", "test", "-v" ,"./..."]
+CMD ["go", "test", "-v" ,"./"]
