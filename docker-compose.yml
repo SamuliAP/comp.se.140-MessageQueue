@@ -48,12 +48,25 @@ services:
       context: ./
       dockerfile: ./httpserv/Dockerfile
     container_name: httpserv
-    ports:
-      - 8081:80
     expose:
       - 80
     volumes:
       - ./data:/app/data
+
+  api:
+    networks:
+      - devops
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile
+    container_name: api
+    ports:
+      - 8081:80
+    expose:
+      - 80
+    depends_on:
+      - httpserv
+
 
 networks:
   devops:
