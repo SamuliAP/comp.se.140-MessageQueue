@@ -1,30 +1,15 @@
 package tests
 
 import (
-	"errors"
 	"io/ioutil"
-	"net/http"
 	"regexp"
 	"strings"
 	"testing"
 	"time"
 )
 
-func TestHTTPConnection(t *testing.T) {
-
-	resp, err := GetHTTPSERVResponse(t)
-	if err != nil {
-		t.Error(err.Error())
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		t.Error("HTTPSERV did not respond with HTTP status 200")
-	}
-}
-
-func TestHTTPSERVBody(t *testing.T) {
-	resp, err := GetHTTPSERVResponse(t)
+func TestGetMessageBody(t *testing.T) {
+	resp, err := GetMessage(t)
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -86,23 +71,4 @@ func ValidateIsWhitespace(s string, t *testing.T) {
 	if err != nil {
 		t.Error("Invalid row format, extra ouput found in the end of row")
 	}
-}
-
-func GetHTTPSERVResponse(t *testing.T) (*http.Response, error) {
-
-	t.Log(time.Now().Format(time.RFC3339Nano), " attempting to connect to HTTPSERV")
-	for i := 0; i < 30; i++ {
-
-		t.Log(time.Now().Format(time.RFC3339Nano), " connecting...")
-
-		resp, err := http.Get("http://httpserv")
-		if err == nil {
-			t.Log(time.Now().Format(time.RFC3339Nano), " connected!")
-			return resp, nil
-		}
-
-		time.Sleep(5 * time.Second)
-	}
-
-	return nil, errors.New("could not connect to HTTPSERV via HTTP")
 }
