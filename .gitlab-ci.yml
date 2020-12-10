@@ -12,10 +12,11 @@ build:
   script:
     - docker-compose down
     - docker-compose build
+    - docker-compose -f docker-compose-tests.yml build
     - docker-compose up -d
 
 test:
   stage: test
   script:
     - docker-compose build
-    - docker-compose up -d --abort-on-container-exit
+    - docker-compose -f docker-compose-tests.yml up -d --abort-on-container-exit
