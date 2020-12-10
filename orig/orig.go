@@ -24,7 +24,7 @@ func main() {
 	declareExhange(ch)
 
 	log.Println("Sending messages")
-	for true {
+	for i := 1; true; i++ {
 		publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
 		log.Printf("Sent out: %d", i)
 		time.Sleep(3 * time.Second)
