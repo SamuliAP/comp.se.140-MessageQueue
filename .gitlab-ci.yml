@@ -26,7 +26,7 @@ test:
 
 # build and deploy a clean environment after tests
 deploy:
-  stage: production
+  stage: deploy
   script:
     - docker-compose down
     - docker-compose build
