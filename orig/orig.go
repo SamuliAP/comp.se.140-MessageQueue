@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	time.Sleep(10*time.Second)
+	time.Sleep(10 * time.Second)
 
 	conn, err := getConnection()
 	onError(err, "Connection refused")
@@ -24,17 +24,16 @@ func main() {
 	declareExhange(ch)
 
 	log.Println("Sending messages")
-	for i := 1; i <= 3; i++ {
-		publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
-		log.Printf("Sent out: %d", i)
-		time.Sleep(3 * time.Second)
-	}
+
+	publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
+	log.Printf("Sent out: %d", i)
+	time.Sleep(3 * time.Second)
 }
 
 func publishMessage(ch *amqp.Channel, key string, message []byte) {
 	err := ch.Publish(
 		"comps400", // exchange
-		key,     // routing key
+		key,        // routing key
 		false,      // mandatory
 		false,      // immediate
 		amqp.Publishing{

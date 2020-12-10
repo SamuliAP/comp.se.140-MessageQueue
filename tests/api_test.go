@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestGetMessageBodyFormat(t *testing.T) {
+func TestInitialGetMessageBodyFormat(t *testing.T) {
 
 	body := GetMessagesBody(t)
 	validateGetMessages(body, t)
