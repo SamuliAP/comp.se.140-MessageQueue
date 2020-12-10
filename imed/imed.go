@@ -1,7 +1,9 @@
 package main
 
 import (
+	"../api"
 	"errors"
+	"fmt"
 	"github.com/streadway/amqp"
 	"log"
 	"os"
@@ -27,7 +29,11 @@ func main() {
 
 	go func() {
 		for d := range msgs {
-			time.Sleep(1*time.Second)
+
+			if fmt.Sprintf("%s", d.Body) == api.CMD_SHUTDOWN {
+				os.Exit(0)
+			}
+			time.Sleep(1 * time.Second)
 			msg := append([]byte("Got "), d.Body[:]...)
 			publishMessage(ch, "my.i", msg)
 			log.Printf("Published: %s", msg)
@@ -42,7 +48,7 @@ func main() {
 func publishMessage(ch *amqp.Channel, key string, message []byte) {
 	err := ch.Publish(
 		"comps400", // exchange
-		key,     // routing key
+		key,        // routing key
 		false,      // mandatory
 		false,      // immediate
 		amqp.Publishing{
@@ -94,8 +100,8 @@ func declareQueue(ch *amqp.Channel) amqp.Queue {
 
 func bindQueue(ch *amqp.Channel, q amqp.Queue, key string) {
 	err := ch.QueueBind(
-		q.Name,       // queue name
-		key,       // routing key
+		q.Name,     // queue name
+		key,        // routing key
 		"comps400", // exchange
 		false,
 		nil)

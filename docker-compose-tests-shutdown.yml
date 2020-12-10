@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  tests:
+    networks:
+      - devops
+    build:
+      context: ./
+      dockerfile: ./tests/shutdown/Dockerfile
+    container_name: tests-shutdown
+
+networks:
+  devops:
+    driver: bridge

@@ -2,10 +2,9 @@ FROM golang
 
 WORKDIR /app
 
-COPY ./httpserv ./src
-COPY ./data ./data
+COPY . .
 
-RUN go mod init httpserv
-RUN go build -o out ./src
+RUN go get -d ./...
+RUN go build -o out ./httpserv
 
 CMD ["/app/out"]

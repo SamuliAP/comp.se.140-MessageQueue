@@ -27,7 +27,9 @@ services:
   imed:
     networks:
       - devops
-    build: ./imed
+    build:
+      context: ./
+      dockerfile: ./imed/Dockerfile
     container_name: imed
     depends_on:
       - rabbitmq

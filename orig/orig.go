@@ -34,6 +34,9 @@ func main() {
 
 		if ShouldShutdown() {
 			log.Println("SHUT DOWN")
+
+			// send a shutdown message to imed and obse
+			publishMessage(ch, "my.o", []byte(api.CMD_SHUTDOWN))
 			return
 		}
 

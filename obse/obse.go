@@ -1,6 +1,7 @@
 package main
 
 import (
+	"../api"
 	"errors"
 	"fmt"
 	"github.com/streadway/amqp"
@@ -34,7 +35,18 @@ func main() {
 	onError(err, "Couldn't open data source")
 	go func() {
 		for d := range msgs {
-			var row = time.Now().Format(time.RFC3339Nano) + " Topic " + d.RoutingKey + " " + fmt.Sprintf("%s \n", d.Body)
+
+			body := fmt.Sprintf("%s", d.Body)
+			if body == api.CMD_SHUTDOWN {
+				os.Create("/app/data/data.txt")
+
+				// send a shutdown signal to httpserv
+				f.WriteString(api.CMD_SHUTDOWN)
+				os.Exit(0)
+			}
+
+			row := time.Now().Format(time.RFC3339Nano) + " Topic " + d.RoutingKey + fmt.Sprintf(" %s \n", d.Body)
+
 			f.WriteString(row)
 			log.Printf("Wrote to file: %s", row)
 		}

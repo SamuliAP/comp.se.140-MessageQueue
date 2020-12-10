@@ -1,10 +1,12 @@
 package main
 
 import (
+	"../api"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 func FileContents(w http.ResponseWriter, req *http.Request) {
@@ -16,6 +18,9 @@ func FileContents(w http.ResponseWriter, req *http.Request) {
 		log.Println("Couldn't read data source")
 	}
 
+	if string(content) == api.CMD_SHUTDOWN {
+		os.Exit(0)
+	}
 	log.Println("Responded with status 200")
 	fmt.Fprint(w, string(content))
 }

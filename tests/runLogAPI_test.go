@@ -26,7 +26,7 @@ func HandleRunlogNewStateCheck(t *testing.T, state string, contains []string) {
 	runLog := api.GetRunLogHandleError(t)
 
 	newLog := runLog[runLogSize:]
-	t.Log(newLog)
+
 	if len(contains) == 0 && len(newLog) != 0 {
 		t.Error("Run log logged duplicate event", state)
 	}

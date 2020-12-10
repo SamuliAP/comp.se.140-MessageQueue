@@ -3,8 +3,9 @@ FROM golang
 WORKDIR /app
 
 COPY . .
+WORKDIR /app/imed
 
-RUN go mod init imed
+RUN go get -d ./...
 RUN go build -o out .
 
-CMD ["/app/out"]
+CMD ["/app/imed/out"]
