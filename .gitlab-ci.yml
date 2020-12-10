@@ -13,22 +13,29 @@ build:
     - docker-compose down
     - docker-compose -f docker-compose-tests.yml down
     - docker-compose -f docker-compose-tests-shutdown.yml down
-    - docker-compose -f docker-compose-tests.yml up --build
+    - docker-compose -f docker-compose-lint.yml down
+    - docker-compose build
+    - docker-compose -f docker-compose-tests.yml build
+    - docker-compose -f docker-compose-tests-shutdown.yml build
+    - docker-compose -f docker-compose-lint.yml build
     - docker-compose up -d
 
 test:
   stage: test
   script:
     - docker ps
-    - docker-compose -f docker-compose-lint.yml up --build --abort-on-container-exit
-    - docker-compose -f docker-compose-tests.yml up --build --abort-on-container-exit
+    - docker-compose -f docker-compose-lint.yml up --abort-on-container-exit
+    - docker-compose -f docker-compose-tests.yml up --abort-on-container-exit
     # shutdown tests ran separately, as they'll end in services shutting down
-    - docker-compose -f docker-compose-tests-shutdown.yml up --build --abort-on-container-exit
+    - docker-compose -f docker-compose-tests-shutdown.yml up --abort-on-container-exit
 
 # build and deploy a clean environment after tests
 deploy:
   stage: deploy
   script:
     - docker-compose down
+    - docker-compose -f docker-compose-tests.yml down
+    - docker-compose -f docker-compose-tests-shutdown.yml down
+    - docker-compose -f docker-compose-lint.yml down
     - docker-compose build
     - docker-compose up -d
