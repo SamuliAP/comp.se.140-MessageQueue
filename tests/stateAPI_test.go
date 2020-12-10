@@ -99,14 +99,3 @@ func TestRunningState(t *testing.T) {
 	// reset state
 	api.PutStateHandleError(t, api.CMD_INIT)
 }
-
-/*
-func TestShutdownState(t *testing.T) {
-
-	api.PutStateHandleError(t, api.CMD_SHUTDOWN)
-	_, err := api.GetResponse("http://server/messages")
-	if err == nil {
-		t.Error("Services still running after shutdown")
-	}
-}
-*/

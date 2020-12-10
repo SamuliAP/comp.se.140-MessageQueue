@@ -2,10 +2,9 @@ FROM golang
 
 WORKDIR /app
 
-COPY ./obse ./src
-COPY ./data ./data
+COPY . .
 
-RUN go mod init obse
-RUN go build -o out ./src
+RUN go get -d ./...
+RUN go build -o out ./obse
 
 CMD ["/app/out"]
