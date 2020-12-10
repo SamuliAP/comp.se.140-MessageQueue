@@ -24,10 +24,11 @@ func main() {
 	declareExhange(ch)
 
 	log.Println("Sending messages")
-
-	publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
-	log.Printf("Sent out: %d", i)
-	time.Sleep(3 * time.Second)
+	for true {
+		publishMessage(ch, "my.o", []byte("MSG_"+strconv.Itoa(i)))
+		log.Printf("Sent out: %d", i)
+		time.Sleep(3 * time.Second)
+	}
 }
 
 func publishMessage(ch *amqp.Channel, key string, message []byte) {
