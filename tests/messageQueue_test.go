@@ -90,8 +90,6 @@ func ValidateIsWhitespace(s string, t *testing.T) {
 
 func GetHTTPSERVResponse(t *testing.T) (*http.Response, error) {
 
-	time.Sleep(10 * time.Second)
-
 	t.Log(time.Now().Format(time.RFC3339Nano), " attempting to connect to HTTPSERV")
 	for i := 0; i < 30; i++ {
 
