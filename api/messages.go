@@ -4,13 +4,13 @@ import (
 	"testing"
 )
 
-func GetMessagesBody() (string, error) {
+func GetMessages() (string, error) {
 
 	return GetResponseBody(GetResponse, "http://server/messages")
 }
 
 func GetMessagesBodyHandleError(t *testing.T) string {
-	body, err := GetMessagesBody()
+	body, err := GetMessages()
 	if err != nil {
 		t.Error(err.Error())
 	}
