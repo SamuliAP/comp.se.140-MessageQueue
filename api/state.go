@@ -30,12 +30,6 @@ func GetState() (string, error) {
 
 }
 
-func GetCMD() (string, error) {
-
-	return GetResponseBody(GetResponse, "http://server/cmd")
-
-}
-
 func PutState(state string) error {
 
 	client := http.Client{}
@@ -43,6 +37,7 @@ func PutState(state string) error {
 	if err != nil {
 		return err
 	}
+	req.Close = true
 	defer req.Body.Close()
 
 	res, err := client.Do(req)
