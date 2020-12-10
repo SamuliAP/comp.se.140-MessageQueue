@@ -1,12 +1,12 @@
 # comp.se.140-MessageQueue
 
-- docker-compose up -d -f docker-compsoe-gitlab-yml
-- register a root user in the local gitlab installation
-- imported the repo from github
-- fetched runner token from local gitlab, included in the gitlab-runner-register.sh, ran sh
+### Running the application services
+`docker-compose up -d --build`
 
-testing framework it built in golang (go test)
+### Running the linter
+`docker-compose -f docker-compose-lint.yml up -d --build `
 
+### Running the tests
+`docker-compose -f docker-compose-tests.yml up -d --build`
 
-in the end for public access:
-- git push --mirror https://github.com/SamuliAP/comp.se.140-MessageQueue.git
+`docker-compose -f docker-compose-tests-shutdown.yml up -d --build`
